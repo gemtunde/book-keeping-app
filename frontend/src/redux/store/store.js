@@ -11,11 +11,23 @@ const middlewares = [thunk]
 const reducer = combineReducers({
     bookCreated : createBookReducer,
     booksList : bookListReducer,
-    userLogin : userReducer,
+    userLogin : userReducer, //login and register
 })
+
+//get user from local storage and save in our store
+    const userAuthFromStorage = localStorage.getItem('userAuthData') ? 
+    JSON.parse(localStorage.getItem('userAuthData')) : null ;
+
+    const initialState = {
+        userLogin : {
+            userInfo : userAuthFromStorage
+        },
+    }
+
 
 const store = createStore(
     reducer,
+    initialState,
     composeWithDevTools(applyMiddleware(...middlewares))
 )
 export {store}
